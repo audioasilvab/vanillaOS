@@ -9,7 +9,7 @@ Este proyecto busca demostrar que conceptos como planificación de procesos, ges
 
 ![Captura de pantalla](./assets/screenshots/demo1.png)
 
-## 🚀 Próximas mejoras
+## ✨ Próximas mejoras
 
 Estas son las funcionalidades que estamos desarrollando para las próximas versiones:
 
