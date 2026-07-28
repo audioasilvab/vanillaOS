@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vanillaOS</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/wm.js"></script>
+
+  <style>
+    .desktop .window {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      position: absolute;
+      z-index: 9;
+      overflow: hidden;
+      width: 420px;
+      height: 200px;
+      transition: all 20ms ease;
+
+      /* Estilo detallado Gnome Tweaks (Adwaita Claro) */
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3); /* Sombra suave, amplia y difusa */
+      border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil casi invisible */
+      border-radius: 6px; /* Esquinas sutiles y nítidas, no tan redondeadas */
+      background-color: #fafafa; /* Fondo claro de la ventana */
+    }
+
+    /* Eliminar el efecto de desenfoque original */
+    .desktop .window .window__appbar:before {
+      display: none;
+    }
+
+    .desktop .window .appbar-title {
+      /* Centrar el título de la sección */
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0;
+    }
+
+    .desktop .window .appbar-title h3 {
+      font-weight: 600; /* Peso de fuente más Gnome Tweaks */
+    }
+
+    .desktop .window .appbar-options {
+      margin-left: auto; /* Mover botones a la derecha */
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 0.1rem; /* Espaciado muy pequeño entre botones */
+    }
+
+    /* Ajuste de los botones de control para que sean círculos grises */
+    .desktop .window .btn-window-minimize,
+    .desktop .window .btn-window-size,
+    .desktop .window .btn-window-close {
+      width: 24px;
+      height: 24px;
+      background-color: #e0e0e0; /* Color de fondo del botón */
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 1.1rem;
+      border: none;
+      border-radius: 50%; /* Botones circulares */
+      padding: 0;
+      transition: background-color 100ms ease;
+    }
+
+    .desktop .window .window__appbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 36px; 
+      cursor: move;
+      /*padding: 0 0.5rem;*/
+
+      /* Degradado y detalles estilo GNOME 3.32 (GTK3 Adwaita) */
+      background: linear-gradient(to bottom, #efebdb 0%, #dedadd 100%);
+      border-bottom: 1px solid #c0baba;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); 
+      
+      color: #2e3436;
+      font-size: 0.9rem;
+      
+      /* Asegura que el cabezal respete los bordes redondeados superiores de la ventana */
+      border-radius: 6px 6px 0 0; 
+    }
+
+    /* Contenedor de los botones */
+    .desktop .window .appbar-options {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 0.1rem;
+      margin-right: 0.2rem;
+    }
+
+    /* Estilo base transparente para los tres botones */
+    .desktop .window .btn-window-minimize,
+    .desktop .window .btn-window-size,
+    .desktop .window .btn-window-close {
+      width: 28px;
+      height: 28px;
+      background-color: transparent; 
+      background-repeat: no-repeat;
+      background-position: center;
+      border: 1px solid transparent;
+      border-radius: 4px; /* Bordes ligeramente cuadrados en hover, clásico de GNOME 3.32 */
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+
+    /* Icono Minimizar (Línea horizontal en la parte inferior) */
+    .desktop .window .btn-window-minimize {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4' y='10' width='8' height='1.5' fill='%232e3436'/%3E%3C/svg%3E");
+      background-size: 16px;
+    }
+
+    /* Icono Maximizar (Cuadrado con borde) */
+    .desktop .window .btn-window-size {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4.5' y='4.5' width='7' height='7' fill='none' stroke='%232e3436' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-size: 16px;
+    }
+
+    /* Icono Cerrar (Equis fina) */
+    .desktop .window .btn-window-close {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 5l6 6M5 11l6-6' stroke='%232e3436' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E");
+      background-size: 16px;
+    }
+
+    /* Efectos Hover (Pasar el ratón) */
+    .desktop .window .btn-window-minimize:hover,
+    .desktop .window .btn-window-size:hover {
+      background-color: rgba(0, 0, 0, 0.08); /* Sombreado gris muy sutil */
+      border-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .desktop .window .btn-window-close:hover {
+      background-color: #df3b40; /* Rojo característico de cierre */
+      border-color: #c43236;
+      /* Cambia el icono a blanco al pasar el ratón para hacer contraste con el rojo */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 5l6 6M5 11l6-6' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E");
+    }
+
+    /* Estado cuando la ventana ya está maximizada (Dos cuadrados solapados) */
+    .desktop .window--maximized .btn-window-size {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 5.5h7v7h-7zM5.5 3.5h7v7' fill='none' stroke='%232e3436' stroke-width='1.2'/%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+
+<body>
+  <header class="menubar">
+    <div class="menubar-left-buttons">
+      <span class="activities">Activities</span>
+      <div class="current-app">
+        
+      </div>
+    </div>
+    <p class="clock">
+      <span class="date">8 May </span>&nbsp;<span class="time">12:12</span>
+    </p>
+    <div class="menubar-right-buttons">
+      <button class="btn-menu btn-wifi-bg" id="wifiBtn" title="Wifi"></button>
+      <button class="btn-menu btn-volume-bg" id="volumeBtn" title="Volume"></button>
+      <button class="btn-menu btn-shutdown-bg" id="shutdownBtn" title="Shutdown"></button>
+    </div>
+  </header>
+  <main>
+    <div class="launcher">
+      <div class="launcher-apps">
+        <div class="launcher__icon">
+          <img src="img/terminalIcon.svg" alt="Terminal icon">
+        </div>
+      </div>
+      <div class="menu-launcher__icon">
+        <img src="img/dots-menu-icon.svg" alt="Menu icon">
+      </div>
+    </div>
+    <section id="desktop" class="desktop">
+      <div id="desktop-icons" style="display: grid; grid-template-columns: repeat(auto-fill, 100px); gap: 20px; padding: 20px;"></div>
+        
+    </section>
+  </main>
+  
+  <script>
+    // 1. Esta es la función maestra que sabe cómo abrir CUALQUIER app
+    async function lanzarApp(app) {
+        console.log(`Iniciando: ${app.name}...`);
+
+        try {
+            // Importamos el código de la aplicación bajo demanda (Lazy Loading)
+            const modulo = await import(app.entry);
+
+            let win_element = windowManager.createNewWindow(app.name);
+            let win_gui = win_element.querySelector(".window__content");
+
+            modulo.init(win_gui, win_element, { storage: localStorage });
+
+        } catch (error) {
+            console.error("Error al cargar el módulo de la app:", error);
+        }
+    }
+
+    // 2. Función para inicializar el escritorio
+    async function inicializarEscritorio() {
+        try {
+            // Pedimos la lista de apps al servidor
+            const respuesta = await fetch('/api/packages');
+            const aplicaciones = await respuesta.json();
+
+            // Creamos un contenedor para los iconos si no existe
+            const escritorio = document.getElementById('desktop-icons') || document.body;
+
+            aplicaciones.forEach(app => {
+                // Creamos el elemento visual del icono
+                const boton = document.createElement('div');
+                boton.className = 'app-icon';
+                boton.innerHTML = `
+                    <div class="icon-symbol">${app.icon || '📦'}</div>
+                    <div class="icon-label">${app.name}</div>
+                `;
+                
+                // Al hacer click, lanzamos la app usando su objeto de metadatos
+                boton.onclick = () => lanzarApp(app);
+                
+                escritorio.appendChild(boton);
+            });
+        } catch (error) {
+            console.error("No se pudo conectar con el servidor de aplicaciones.");
+        }
+    }
+
+    // Arrancamos el sistema
+    window.onload = () => {
+
+      // Inicializar el sistema de ventanas
+      const windowManager = new WindowManager();
+
+      // Hacer accesible globalmente para los onclick
+      window.windowManager = windowManager;
+
+      inicializarEscritorio();
+    }
+  </script>
+</body>
+
+</html>

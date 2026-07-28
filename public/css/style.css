@@ -1,0 +1,314 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  user-select: none;
+  font-family: "Ubuntu variable", "Ubuntu", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --terminal-bg-color: #1b1c1f;
+  --terminal-text-color: #dfe2e7;
+  --menubar-bg-color: #305e79;
+  --menubar-text-color: white;
+  --window-appbar-bg-color: #242529;
+  --text-color: #fff;
+  --primary-color: #11c8d6;
+  --secondary-color: #fe018f;
+  --menubar-height: 1.8rem;
+  --launcher-width: 4rem;
+}
+
+.terminal p a {
+  color: rgb(51, 111, 223);
+}
+
+body {
+  overflow: hidden;
+  height: 100vh;
+  background: linear-gradient(#305e79, #2b7b82);
+}
+
+.menubar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  height: var(--menubar-height);
+  color: var(--menubar-text-color);
+  background-color: #444;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  box-shadow: 0 4px 16px -5px rgba(0, 0, 0, 0.1);
+}
+
+.clock {
+  cursor: pointer;
+}
+
+.clock.only-time .date {
+  display: none;
+}
+
+.menubar-left-buttons {
+  margin: 0 .5rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.current-app {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  backdrop-filter: blur(5px);
+  color: var(--menubar-text-color);
+  transition: all 20ms ease;
+}
+
+.menubar-right-buttons {
+  display: flex;
+  gap: .5rem;
+  margin-right: .5rem;
+}
+.btn-menu {
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: .9rem;
+  border: none;
+}
+
+.btn-volume-bg {
+  background-image: url(../img/volumeIcon.svg);
+}
+
+.btn-no-volume-bg {
+  background-image: url(../img/noVolumeIcon.svg);
+}
+
+.btn-shutdown-bg {
+  background-image: url(../img/shutdownIcon.svg);
+}
+
+.btn-wifi-bg {
+  background-image: url(../img/wiFiIcon.svg);
+}
+
+.menubar-right-buttons:hover button {
+  cursor: pointer;
+}
+
+.inactive {
+  opacity: .5;
+}
+
+.launcher {
+  background-color: #282424;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: var(--launcher-width);
+  padding: .5rem;
+  border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+.launcher__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: .3rem;
+  transition: all 20ms ease;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.launcher__icon:after {
+  position: absolute;
+  left: .4rem;
+  content: '';
+  background-color: #11c8d6;
+  width: .3rem;
+  height: .3rem;
+  border-radius: 50%;
+}
+
+.menu-launcher__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: .55rem;
+  transition: all 30ms ease-in;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.menu-launcher__icon img {
+  width: 100%;
+}
+
+.launcher__icon:hover img,
+.menu-launcher__icon:hover img {
+  transform: scale(1.05);
+}
+
+main {
+  display: flex;
+  height: calc(100% - var(--menubar-height));
+  margin: 0;
+}
+
+.desktop {
+  background-image: url("../wallpapers/wall01.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  overflow: hidden;
+}
+
+.desktop__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.window {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  position: absolute;
+  z-index: 9;
+  overflow: hidden;
+  width: 420px;
+  height: 200px;
+  transition: all 20ms ease;
+  box-shadow: 4px 4px 16px 1px rgba(0, 0, 0, .25);
+  border: 1px solid rgb(169 188 190 /.1);
+  border-radius: 12px;
+}
+
+.window__appbar {
+  position: relative;
+  display: flex;
+  background-color: #444;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.5rem;
+  cursor: move;
+}
+
+.window__appbar:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(25px);
+  background-color: var(--menubar-bg-color);
+}
+
+.window__appbar h3 {
+  font-weight: 500;
+}
+
+.appbar-title {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .3rem .5rem;
+}
+
+.appbar-options {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.btn-window-minimize {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-image: url(../img/minimizeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem;
+  border: none;
+}
+
+.btn-window-minimize:hover {
+  background-color: rgba(255, 255, 255, .15);
+}
+
+.btn-window-close {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-image: url(../img/closeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem;
+  border: none;
+}
+
+.btn-window-close:hover {
+  background-color: rgba(255, 255, 255, .15);
+}
+
+.btn-window-size {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-image: url(../img/maximizeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem;
+  border: none;
+}
+
+.btn-window-size:hover {
+  background-color: rgba(255, 255, 255, .15);
+}
+
+.window--maximized .btn-window-size {
+  background-image: url(../img/resizeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem;
+}
+
+.window--maximized {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #343536;
+  border-radius: 0;
+  background: var(--menubar-bg-color);
+
+  border-radius: 100px;
+}
+
+.window__appcontent {
+  background-color: #fafafa;
+  width: 100%;
+  height: 100%;
+}
