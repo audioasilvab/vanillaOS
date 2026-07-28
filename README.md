@@ -6,3 +6,5 @@
 - **Backend:** Servicios de sistema, gestión de procesos y almacenamiento simulado a través de Node.js.
 
 Este proyecto busca demostrar que conceptos como planificación de procesos, gestión de memoria y entrada/salida pueden ser emulados con herramientas modernas, sirviendo como puente entre la teoría de sistemas operativos y la práctica en la web.
+
+![Captura de pantalla](./assets/screenshots/demo1.png)
