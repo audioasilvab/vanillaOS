@@ -31,4 +31,4 @@ node server
 
 ## 🔗 Acceso
 
-Abre tu navegador y visita: http://localhost:3000
+Abre tu navegador y visita: http://localhost:8000
