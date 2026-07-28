@@ -20,7 +20,7 @@ Estas son las funcionalidades que estamos desarrollando para las próximas versi
   Compatibilidad con ejecutables y herramientas del ecosistema Linux
 
 - 🎨 **Rediseño de la interfaz**  
-  Experiencia de usuario más fluida e intuitiva
+  Experiencia de usuario más fluida e intuitiva similar a la de Gnome en su versión 50
 
 - 🪟 **Gestor de ventanas mejorado**  
   Mayor control y personalización en la organización de ventanas
