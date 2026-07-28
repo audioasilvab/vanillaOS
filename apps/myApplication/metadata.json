@@ -1,0 +1,11 @@
+{
+  "id": "9832376", 
+  "name": "myApplication",
+  "executable": "main.js",
+  "icon": "📝",
+  "config": {
+    "width": 600,
+    "height": 400,
+    "theme": "choco-mode" 
+  }
+}
