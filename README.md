@@ -1,4 +1,4 @@
-# VanillaOS.js - Un Sistema Operativo en el Navegador
+# VanillaOS.js
 
 **VanillaOS.js** es un proyecto que explora los fundamentos de un sistema operativo utilizando exclusivamente el stack web. Su arquitectura se divide en:
 
