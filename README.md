@@ -27,3 +27,8 @@ cd vanillaOS
 
 # Iniciar el servidor
 node server
+```
+
+## 🔗 Acceso
+
+Abre tu navegador y visita: http://localhost:3000
