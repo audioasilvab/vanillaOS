@@ -25,6 +25,9 @@ git clone https://github.com/audioasilvab/vanillaOS.git
 # Acceder a la carpeta
 cd vanillaOS
 
+# Instalación de dependencias
+npm install
+
 # Iniciar el servidor
 node server
 ```
