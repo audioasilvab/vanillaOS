@@ -11,7 +11,7 @@ Este proyecto busca demostrar que conceptos como planificación de procesos, ges
 
 ## ✨ Próximas mejoras
 
-Estas son las funcionalidades que estamos desarrollando para las próximas versiones:
+Estas son las funcionalidades que se estarán desarrollando para las próximas versiones:
 
 - 🧩 **Desarrollo de aplicaciones nativas**  
   Crea y ejecuta aplicaciones dentro del entorno de vanillaOS
