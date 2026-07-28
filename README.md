@@ -9,6 +9,22 @@ Este proyecto busca demostrar que conceptos como planificación de procesos, ges
 
 ![Captura de pantalla](./assets/screenshots/demo1.png)
 
+## 🚀 Próximas mejoras
+
+Estas son las funcionalidades que estamos desarrollando para las próximas versiones:
+
+- 🧩 **Desarrollo de aplicaciones nativas**  
+  Crea y ejecuta aplicaciones dentro del entorno de vanillaOS
+
+- 🐧 **Soporte para aplicaciones Linux**  
+  Compatibilidad con ejecutables y herramientas del ecosistema Linux
+
+- 🎨 **Rediseño de la interfaz**  
+  Experiencia de usuario más fluida e intuitiva
+
+- 🪟 **Gestor de ventanas mejorado**  
+  Mayor control y personalización en la organización de ventanas
+
 ## 🚀 Instalación y ejecución
 
 ### Requisitos previos
