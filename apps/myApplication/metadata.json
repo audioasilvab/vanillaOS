@@ -2,10 +2,10 @@
   "id": "9832376", 
   "name": "myApplication",
   "executable": "main.js",
-  "icon": "📝",
+  "icon": "icon.png",
   "config": {
     "width": 600,
     "height": 400,
-    "theme": "choco-mode" 
+    "theme": "choco-mode"
   }
 }
