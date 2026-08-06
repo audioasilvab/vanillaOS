@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Ubuntu variable';
+  src: url('../fonts/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -165,7 +170,7 @@ main {
 }
 
 .desktop {
-  background-image: url("../wallpapers/wall01.jpg");
+  background-image: url("../wallpapers/wall02.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -195,120 +200,237 @@ main {
   position: absolute;
   z-index: 9;
   overflow: hidden;
-  width: 420px;
-  height: 200px;
-  transition: all 20ms ease;
-  box-shadow: 4px 4px 16px 1px rgba(0, 0, 0, .25);
-  border: 1px solid rgb(169 188 190 /.1);
-  border-radius: 12px;
+  
+  transition: all 10ms ease;
+
+  /* Estilo detallado Gnome Tweaks (Adwaita Claro) */
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3); /* Sombra suave, amplia y difusa */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil casi invisible */
+  border-radius: 6px; /* Esquinas sutiles y nítidas, no tan redondeadas */
+  background-color: #fafafa; /* Fondo claro de la ventana */
 }
 
-.window__appbar {
-  position: relative;
-  display: flex;
-  background-color: #444;
-  justify-content: space-between;
-  align-items: center;
-  height: 2.5rem;
-  cursor: move;
+/* Eliminar el efecto de desenfoque original */
+.window .window__appbar:before {
+  display: none;
 }
 
-.window__appbar:before {
-  content: '';
+.window .appbar-title {
+  /* Centrar el título de la sección */
   position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  filter: blur(25px);
-  background-color: var(--menubar-bg-color);
-}
-
-.window__appbar h3 {
-  font-weight: 500;
-}
-
-.appbar-title {
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: .6rem;
-  padding: .3rem .5rem;
+  gap: 0.5rem;
+  padding: 0;
 }
 
-.appbar-options {
+.window .appbar-title h3 {
+  font-weight: 600; /* Peso de fuente más Gnome Tweaks */
+}
+
+.window .appbar-options {
+  margin-left: auto; /* Mover botones a la derecha */
   display: flex;
   justify-content: end;
   align-items: center;
+  gap: 0.1rem; /* Espaciado muy pequeño entre botones */
 }
 
-.btn-window-minimize {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: transparent;
-  background-image: url(../img/minimizeIcon.svg);
+/* Ajuste de los botones de control para que sean círculos grises */
+.window .btn-window-minimize,
+.window .btn-window-size,
+.window .btn-window-close {
+  width: 24px;
+  height: 24px;
+  background-color: #e0e0e0; /* Color de fondo del botón */
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 1.4rem;
+  background-size: 1.1rem;
   border: none;
+  border-radius: 50%; /* Botones circulares */
+  padding: 0;
+  transition: background-color 100ms ease;
 }
 
-.btn-window-minimize:hover {
-  background-color: rgba(255, 255, 255, .15);
+.window .window__appbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px; 
+  cursor: move;
+  /*padding: 0 0.5rem;*/
+
+  /* Degradado y detalles estilo GNOME 3.32 (GTK3 Adwaita) */
+  background: linear-gradient(to bottom, #efebdb 0%, #dedadd 100%);
+  border-bottom: 1px solid #c0baba;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); 
+  
+  color: #2e3436;
+  font-size: 0.9rem;
+  
+  /* Asegura que el cabezal respete los bordes redondeados superiores de la ventana */
+  border-radius: 6px 6px 0 0; 
 }
 
-.btn-window-close {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: transparent;
-  background-image: url(../img/closeIcon.svg);
+.window__content {
+  width: 100%;
+  height: 100%;
+}
+
+/* Contenedor de los botones */
+.window .appbar-options {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0.1rem;
+  margin-right: 0.2rem;
+}
+
+/* Estilo base transparente para los tres botones */
+.window .btn-window-minimize,
+.window .btn-window-size,
+.window .btn-window-close {
+  width: 28px;
+  height: 28px;
+  background-color: transparent; 
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 1.4rem;
-  border: none;
+  border: 1px solid transparent;
+  border-radius: 4px; /* Bordes ligeramente cuadrados en hover, clásico de GNOME 3.32 */
+  cursor: pointer;
+  transition: all 150ms ease;
 }
 
-.btn-window-close:hover {
-  background-color: rgba(255, 255, 255, .15);
+/* Icono Minimizar (Línea horizontal en la parte inferior) */
+.window .btn-window-minimize {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4' y='10' width='8' height='1.5' fill='%232e3436'/%3E%3C/svg%3E");
+  background-size: 16px;
 }
 
-.btn-window-size {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: transparent;
-  background-image: url(../img/maximizeIcon.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 1.4rem;
-  border: none;
+/* Icono Maximizar (Cuadrado con borde) */
+.window .btn-window-size {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4.5' y='4.5' width='7' height='7' fill='none' stroke='%232e3436' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-size: 16px;
 }
 
-.btn-window-size:hover {
-  background-color: rgba(255, 255, 255, .15);
+/* Icono Cerrar (Equis fina) */
+.window .btn-window-close {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 5l6 6M5 11l6-6' stroke='%232e3436' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-size: 16px;
 }
 
+/* Efectos Hover (Pasar el ratón) */
+.window .btn-window-minimize:hover,
+.window .btn-window-size:hover {
+  background-color: rgba(0, 0, 0, 0.08); /* Sombreado gris muy sutil */
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.window .btn-window-close:hover {
+  background-color: #df3b40; /* Rojo característico de cierre */
+  border-color: #c43236;
+  /* Cambia el icono a blanco al pasar el ratón para hacer contraste con el rojo */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 5l6 6M5 11l6-6' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E");
+}
+
+/* Estado cuando la ventana ya está maximizada (Dos cuadrados solapados) */
 .window--maximized .btn-window-size {
-  background-image: url(../img/resizeIcon.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 1.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 5.5h7v7h-7zM5.5 3.5h7v7' fill='none' stroke='%232e3436' stroke-width='1.2'/%3E%3C/svg%3E");
 }
 
-.window--maximized {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid #343536;
-  border-radius: 0;
-  background: var(--menubar-bg-color);
-
-  border-radius: 100px;
+.window.window--maximized {
+  /* !important es necesario para que cambien las posiciones y dimensiones de las ventanas */
+  left: 0 !important; 
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.window__appcontent {
-  background-color: #fafafa;
+.app-menu {
+  display: flex;
   width: 100%;
   height: 100%;
+  background: #222222;
+  z-index: 99999;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-menu-utilities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-menu-utilities, .app-menu-container {
+  /* flex: 1 1 0% - Fuerza a Flexbox a calcular desde cero */
+  width: 100%;            /* Evita que el contenido largo desborde el div */
+  padding: 20px;
+  box-sizing: border-box; /* Mantiene el padding dentro del cálculo */
+}
+
+.menu-searchbox {
+  display: grid;
+  width: 298px;
+  height: 28px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  background: #343434;
+  border: #7d7d7d1f solid 1px;
+  grid-template-columns: 35px auto;
+  align-items: center;
+}
+
+.app-menu-container-wallpaper {
+  min-width: 160px;
+  height: 90px;
+  box-shadow: 0px 0px 10px #220022;
+}
+
+/* Contenedor de la cuadrícula */
+.app-menu-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 10px 0;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+}
+
+.app-menu-container-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 8px;
+    width: 100%;
+    height: fit-content;
+    padding: 8px;
+}
+
+.app-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.app-icon img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
+}
+
+.icon-label {
+  color: #a1a1a1;
 }
