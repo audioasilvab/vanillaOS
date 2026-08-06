@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Ubuntu variable';
+  font-family: 'Ubuntu regular';
   src: url('../fonts/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
 }
 
@@ -9,7 +9,7 @@
   padding: 0;
 
   user-select: none;
-  font-family: "Ubuntu variable", "Ubuntu", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "Ubuntu regular", "Ubuntu", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 :root {
