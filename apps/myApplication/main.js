@@ -1,13 +1,13 @@
 /**
  * CONTRATO DE ENTRADA
- * @param {HTMLElement} gui - El div (.wb-body) que WinBox creó para ti.
- * @param {Object} win - La instancia de WinBox para que la app pueda cerrarse o redimensionarse sola.
- * @param {Object} core - Un objeto con funciones globales (como guardar archivos).
+ * @param {HTMLElement} gui - El div (.window__content) donde se ven los elemento de la app.
+ * @param {Object} win - La instancia para que la app pueda cerrarse o redimensionarse sola.
+ * @param {Object} core - Un objeto con funciones globales (como guardar archivos, obtener valores generales del sistema).
  */
 
 // main.js de la aplicación "Contador"
 export const init = async (gui, win, core) => {
-    // --- PARTE 1: La Interfaz (HTML) ---
+    // --- La Interfaz (HTML) ---
     gui.innerHTML = `
         <div style="padding: 20px; text-align: center;">
             <h1 id="counter-display">0</h1>
@@ -16,11 +16,11 @@ export const init = async (gui, win, core) => {
         </div>
     `;
 
-    // --- PARTE 2: Variables de Estado ---
+    // --- Variables de Estado ---
     // Estas variables solo viven dentro de esta instancia de la app
     let count = 0;
 
-    // --- PARTE 3: Selección de Elementos ---
+    // --- Selección de Elementos ---
     // Muy importante: usa 'gui.querySelector' y no 'document.querySelector'
     // para no confundirte con otras ventanas abiertas.
     const display = gui.querySelector('#counter-display');
@@ -29,7 +29,7 @@ export const init = async (gui, win, core) => {
 
     display.style.color = "black"
 
-    // --- PARTE 4: La Lógica (Eventos y Funciones) ---
+    // --- La Lógica (Eventos y Funciones) ---
     const updateDisplay = () => {
         display.innerText = count;
         // Si el número es grande, cambiamos el color (lógica de la app)
@@ -47,7 +47,7 @@ export const init = async (gui, win, core) => {
         updateDisplay();
     };
 
-    // --- PARTE 5: Uso del objeto 'win' ---
+    // --- Uso del objeto 'win' ---
     // Podemos hacer que el título de la ventana cambie según el contador
     win.onresize = function(width, height) {
         console.log("La ventana se redimensionó a:", width, height);
