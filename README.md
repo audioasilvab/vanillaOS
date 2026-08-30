@@ -18,9 +18,6 @@ Estas son las funcionalidades que se estarán desarrollando para las próximas a
 - 🧩 **Desarrollo de aplicaciones nativas**  
   Crea y ejecuta aplicaciones dentro del entorno de vanillaOS
 
-- 🐧 **Soporte para aplicaciones Linux**  
-  Compatibilidad con ejecutables y herramientas del ecosistema Linux
-
 - 🎨 **Rediseño de la interfaz**  
   Experiencia de usuario más fluida e intuitiva similar a la de Gnome en su versión 50
 
