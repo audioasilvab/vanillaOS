@@ -1,0 +1,23 @@
+/* Animación para Desaparecer */
+@keyframes entrar {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1); pointer-events: none; }
+}
+
+/* Animación para Aparecer */
+@keyframes salir {
+  from { opacity: 0; transform: scale(1); pointer-events: none; }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.ocultar-total {
+  display: none;
+}
+
+.ocultar-entrar {
+  animation: entrar 0.2s ease forwards;
+}
+
+.ocultar-salir {
+  animation: salir 0.2s ease forwards;
+}
