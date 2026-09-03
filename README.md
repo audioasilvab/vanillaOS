@@ -1,26 +1,22 @@
 # VanillaOS.js
 
-**VanillaOS.js** es un proyecto que explora los fundamentos de un sistema operativo utilizando exclusivamente el stack web. Su arquitectura se divide en:
+**VanillaOS.js** es un proyecto de codigo abierto en fase de desarrollo Beta que replica las caracteristicas de un sistema operativo convencional utilizando exclusivamente el stack web. Su arquitectura se divide en:
 
-- **Frontend:** Interfaz de usuario construida con Vanilla JavaScript, HTML5 y CSS3, por el momento sin dependencias externas.
-- **Backend:** Servicios de sistema, gestión de procesos y almacenamiento simulado a través de Node.js.
-
-Este proyecto busca demostrar que conceptos como planificación de procesos, gestión de memoria y entrada/salida pueden ser emulados con herramientas modernas, sirviendo como puente entre la teoría de sistemas operativos y la práctica en la web.
+- **Frontend:** Interfaz de usuario construida con Vanilla JavaScript, HTML5 y CSS3, sin uso de dependencias externas.
+- **Backend:** Servicios de sistema, gestión de procesos a través de Node.js.
 
 ![Captura de pantalla](./assets/screenshots/beta01.png)
 
-## ✨ Próximas mejoras
-
-Estas son las funcionalidades que se estarán desarrollando para las próximas actualizaciones:
+## ✨ Mejoras de la BETA 0.0.1
 
 - 🧩 **Desarrollo de aplicaciones nativas**  
   Crea y ejecuta aplicaciones dentro del entorno de vanillaOS
 
 - 🎨 **Rediseño de la interfaz**  
-  Experiencia de usuario más fluida e intuitiva similar a la de Gnome en su versión 50
+  Se mejoro el tema de la interfaz y su flujo de trabajo.
 
-- 🪟 **Gestor de ventanas mejorado**  
-  Mayor control y personalización en la organización de ventanas
+- 🪟 **Gestion de ventanas**  
+  Mayor control, minimizar, maximizar y redimensionar.
 
 ## 🚀 Instalación y ejecución
 
