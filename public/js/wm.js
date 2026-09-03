@@ -32,6 +32,7 @@ class WindowManager {
         windowEl.style.height = "240px";
         windowEl.style.top = `${50}px`;
         windowEl.style.left = `${30}px`;
+        windowEl.style.animation = 'popup .3s cubic-bezier(0.25, 1, 0.5, 1)'
         windowEl.style.zIndex = ++this.zIndexCounter;
         
         // Contenido de la ventana
@@ -51,6 +52,11 @@ class WindowManager {
             </div>
           </header>
           <div class="window__content"></div>
+
+          <div class='resizer top-left'></div>
+          <div class='resizer top-right'></div>
+          <div class='resizer bottom-left'></div>
+          <div class='resizer bottom-right'></div>  
         `;
 
         // Agregar eventos de arrastre
@@ -63,9 +69,13 @@ class WindowManager {
         btnMaximize.addEventListener('click', () => this.maximize(windowId));
         const btnClose = windowEl.querySelector('.btn-window-close');
         btnClose.addEventListener('click', () => this.close(windowId));
+        const btnMinimize = windowEl.querySelector('.btn-window-minimize');
+        btnMinimize.addEventListener('click', () => this.minimize(windowId));
 
         // Agregar al contenedor
         this.windowsContainer.appendChild(windowEl);
+
+        makeResizableDiv("#"+windowEl.id)
         
         // Crear item en la barra de tareas
         //this.createTaskbarItem(windowId, windowTitle);
@@ -128,6 +138,10 @@ class WindowManager {
 
     onDrag(e) {
         if (!this.draggedWindow) return;
+
+        this.draggedWindow.element.classList.add("dragging");
+
+        document.body.classList.add("dragging");
         
         const newX = e.clientX - this.dragOffset.x - this.windowsContainer.offsetLeft;
         const newY = e.clientY - this.dragOffset.y - this.windowsContainer.offsetTop;
@@ -147,6 +161,9 @@ class WindowManager {
     onDragEnd() {
         if (this.draggedWindow) {
             this.draggedWindow.element.style.cursor = 'default';
+            this.draggedWindow.element.classList.remove("dragging");
+            document.body.classList.remove("dragging");
+
             this.draggedWindow = null;
         }
     }
@@ -190,9 +207,8 @@ class WindowManager {
         if (index === -1) return; // Ventana no encontrada
         
         const window = this.windows[index];
-        
-        // Eliminar el elemento del DOM
-        window.element.remove();
+
+        window.element.classList.add("hidden");
         
         // Eliminar la ventana del array
         this.windows.splice(index, 1);
@@ -218,10 +234,103 @@ class WindowManager {
         this.onWindowClosed(window);
     }
 
+    minimize(windowId) {
+        // Buscar el índice de la ventana a cerrar
+        const index = this.windows.findIndex(w => w.id === windowId);
+        if (index === -1) return; // Ventana no encontrada
+        
+        const window = this.windows[index];
+        window.element.classList.toggle('hidden');
+    }
+
     // Método opcional para manejar el cierre
     onWindowClosed(window) {
         // Aquí puedes agregar lógica adicional
         console.log(`Ventana ${window.title} cerrada`);
     }
+}
+
+function makeResizableDiv(div) {
+  const element = document.querySelector(div);
+  const resizers = document.querySelectorAll(div + ' .resizer')
+  const minimum_size = 20;
+  let original_width = 0;
+  let original_height = 0;
+  let original_x = 0;
+  let original_y = 0;
+  let original_mouse_x = 0;
+  let original_mouse_y = 0;
+  for (let i = 0;i < resizers.length; i++) {
+    const currentResizer = resizers[i];
+    var desktop = document.getElementById("desktop");
+    var rect_x = desktop.getBoundingClientRect().left;
+    var rect_y = desktop.getBoundingClientRect().top;
+
+    currentResizer.addEventListener('mousedown', function(e) {
+      e.preventDefault()
+      original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+      original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+      original_x = element.getBoundingClientRect().left;
+      original_y = element.getBoundingClientRect().top;
+      original_mouse_x = e.pageX;
+      original_mouse_y = e.pageY;
+
+      window.addEventListener('mousemove', resize)
+      window.addEventListener('mouseup', stopResize)
+    })
+    
+    function resize(e) {
+        element.classList.add("dragging");
+      if (currentResizer.classList.contains('bottom-right')) {
+        const width = original_width + (e.pageX - original_mouse_x);
+        const height = original_height + (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+        }
+      }
+      else if (currentResizer.classList.contains('bottom-left')) {
+        const height = original_height + (e.pageY - original_mouse_y)
+        const width = original_width - (e.pageX - original_mouse_x)
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+        }
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+          element.style.left = original_x + (e.pageX - original_mouse_x) - rect_x + 'px'
+        }
+      }
+      else if (currentResizer.classList.contains('top-right')) {
+        const width = original_width + (e.pageX - original_mouse_x)
+        const height = original_height - (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+          element.style.top = original_y + (e.pageY - original_mouse_y) - rect_y + 'px'
+        }
+      }
+      else {
+        const width = original_width - (e.pageX - original_mouse_x)
+        const height = original_height - (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+          element.style.left = original_x + (e.pageX - original_mouse_x) - rect_x + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+          element.style.top = original_y + (e.pageY - original_mouse_y) - rect_y + 'px'
+        }
+      }
+    }
+    
+    function stopResize() {
+        element.classList.remove("dragging");
+      window.removeEventListener('mousemove', resize)
+    }
+  }
 }
 
