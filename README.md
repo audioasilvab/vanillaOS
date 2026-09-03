@@ -55,6 +55,6 @@ Se vendran muchas otras mas caracteristicas, en esta Beta 0.0.1 lo que se quizo 
 
 Algunas de novedades que quiero mencionar y logren llegar muy pronto serán:
 
-  - Documentacion del proyecto: resaltar su funcionamiento interno y la construcción aplicaciones para el entorno, ya que esto ultimo no esta muy claro.
-  - Personalización de la interfaz: Cambiar los colores predeterminados de las ventanas, los fondos de pantallas y alternar entre el modo claro y oscuro.
-  - Integración de herramientas y aplicaciones basicas: como calendario, reloj, visor de imagenes y archivos, gestor de archivos (aunque para lograrlo se debe de desarrollar un sistema de archivos que interactue con el de su maquina.).
+  - **Documentacion del proyecto:** resaltar su funcionamiento interno y la construcción aplicaciones para el entorno, ya que esto ultimo no esta muy claro.
+  - **Personalización de la interfaz:** Cambiar los colores predeterminados de las ventanas, los fondos de pantallas y alternar entre el modo claro y oscuro.
+  - **Integración de herramientas y aplicaciones basicas:** como calendario, reloj, visor de imagenes y archivos, gestor de archivos (aunque obviamente se debe de desarrollar el sistema de archivos que interactue con el de su maquina para acceder a sus archivos.).
