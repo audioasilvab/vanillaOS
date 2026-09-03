@@ -18,6 +18,9 @@
 - 🪟 **Gestion de ventanas**  
   Mayor control, minimizar, maximizar y redimensionar.
 
+- **Animaciones**
+  Las ventanas y otros elementos se sientes mas naturales a momento de interactuar.
+
 ## 🚀 Instalación y ejecución
 
 ### Requisitos previos
