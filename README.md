@@ -1,7 +1,7 @@
 # VanillaOS.js
 
 <!-- Estado y Tecnologías Principales -->
-[![GitHub release](https://img.shields.io/github/v/release/audioasilvab/vanillaOS?color=blue&label=version)](https://github.com/audioasilvab/vanillaOS/releases)
+[![GitHub release](https://img.shields.io/github/v/release/audioasilvab/vanillaOS?color=blue)](https://github.com/audioasilvab/vanillaOS/releases)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/es/docs/Web/JavaScript)
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/es/docs/Web/HTML)
