@@ -53,7 +53,7 @@ Abre tu navegador y visita: http://localhost:8000
 
 Se vendran mucho mas, solo es el comienzo, en esta Beta 0.0.1 lo que se quizo lograr es refactorizar el codigo anterior de las versiones anteriores y mejorarlo para tener luego la base solida importante del flujo de la interfaz y buen manejo de las ventanas.
 
-Algunas de novedades que quiero mencionar y logren llegar muy pronto serán:
+Algunas de novedades que quiero mencionar y lleguen muy pronto serán:
 
   - **Documentacion del proyecto:** resaltar su funcionamiento interno y la construcción aplicaciones para el entorno, ya que esto ultimo no esta muy claro.
   - **Personalización de la interfaz:** Cambiar los colores predeterminados de las ventanas, los fondos de pantallas y alternar entre el modo claro y oscuro.
