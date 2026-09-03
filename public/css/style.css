@@ -25,10 +25,6 @@
   --launcher-width: 4rem;
 }
 
-.terminal p a {
-  color: rgb(51, 111, 223);
-}
-
 body {
   overflow: hidden;
   height: 100vh;
@@ -142,14 +138,19 @@ body {
   border-radius: 50%;
 }
 
+.launcher__icon img {
+  width: 100%;
+}
+
 .menu-launcher__icon {
   display: flex;
+  position: relative;
+  z-index: 9999999;
   justify-content: center;
   align-items: center;
   width: 3rem;
   height: 3rem;
   padding: .55rem;
-  transition: all 30ms ease-in;
   cursor: pointer;
   border-radius: 8px;
 }
@@ -164,17 +165,17 @@ body {
 }
 
 main {
+  background-image: url("../wallpapers/wall03.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   display: flex;
   height: calc(100% - var(--menubar-height));
   margin: 0;
 }
 
 .desktop {
-  background-image: url("../wallpapers/wall02.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   position: relative;
   display: flex;
   justify-content: center;
@@ -184,14 +185,23 @@ main {
   overflow: hidden;
 }
 
-.desktop__content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+@keyframes popup {
+  0% {
+      transform: scale(.8);
+  }
+
+  to {
+      transform: scale(1);
+  }
 }
+
+/**
+ * 
+ * cubic-bezier(0.34, 1.56, 0.64, 1) [MAS SUAVE/ELASTICA]
+ * cubic-bezier(0.175, 0.885, 0.32, 1.275) [MENOS SUAVE]
+ * cubic-bezier(0.25, 1, 0.5, 1) [Apple/IOS]
+ * 
+ * **/
 
 .window {
   display: flex;
@@ -200,26 +210,42 @@ main {
   position: absolute;
   z-index: 9;
   overflow: hidden;
-  
-  transition: all 10ms ease;
-
+  transition: transform .3s, opacity .3s,
+              width .3s, height .3s, left .3s, top .3s;
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   /* Estilo detallado Gnome Tweaks (Adwaita Claro) */
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3); /* Sombra suave, amplia y difusa */
   border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil casi invisible */
   border-radius: 6px; /* Esquinas sutiles y nítidas, no tan redondeadas */
   background-color: #fafafa; /* Fondo claro de la ventana */
+  
 }
 
-/* Eliminar el efecto de desenfoque original */
-.window .window__appbar:before {
-  display: none;
+.dragging {
+  will-change: left, top, width, height;
+  transition: none;
+  pointer-events: none;
+}
+
+.hidden {
+  transform: scale(.75);
+  opacity: 0; 
+  pointer-events: none;
+}
+
+.active {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8);
+}
+
+.bouncing {
+  transform: scale(1.05);
+}
+
+body.dragging iframe {
+  pointer-events: none !important; /* Deshabilitar todos los eventos hijos durante el drag */
 }
 
 .window .appbar-title {
-  /* Centrar el título de la sección */
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -227,50 +253,34 @@ main {
   padding: 0;
 }
 
-.window .appbar-title h3 {
+.appbar-title h3 {
   font-weight: 600; /* Peso de fuente más Gnome Tweaks */
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .window .appbar-options {
-  margin-left: auto; /* Mover botones a la derecha */
+  /* margin-left: auto; */  /* Mueve los botones a la derecha */
   display: flex;
   justify-content: end;
   align-items: center;
-  gap: 0.1rem; /* Espaciado muy pequeño entre botones */
-}
-
-/* Ajuste de los botones de control para que sean círculos grises */
-.window .btn-window-minimize,
-.window .btn-window-size,
-.window .btn-window-close {
-  width: 24px;
-  height: 24px;
-  background-color: #e0e0e0; /* Color de fondo del botón */
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 1.1rem;
-  border: none;
-  border-radius: 50%; /* Botones circulares */
-  padding: 0;
-  transition: background-color 100ms ease;
+  /* gap: 0.1rem; */  /* Espaciado muy pequeño entre botones */
 }
 
 .window .window__appbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 36px; 
   cursor: move;
-  /*padding: 0 0.5rem;*/
-
+  padding: 0.25rem;
   /* Degradado y detalles estilo GNOME 3.32 (GTK3 Adwaita) */
   background: linear-gradient(to bottom, #efebdb 0%, #dedadd 100%);
   border-bottom: 1px solid #c0baba;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); 
-  
   color: #2e3436;
   font-size: 0.9rem;
-  
   /* Asegura que el cabezal respete los bordes redondeados superiores de la ventana */
   border-radius: 6px 6px 0 0; 
 }
@@ -278,48 +288,37 @@ main {
 .window__content {
   width: 100%;
   height: 100%;
-}
-
-/* Contenedor de los botones */
-.window .appbar-options {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  gap: 0.1rem;
-  margin-right: 0.2rem;
+  overflow: auto;
 }
 
 /* Estilo base transparente para los tres botones */
 .window .btn-window-minimize,
 .window .btn-window-size,
 .window .btn-window-close {
-  width: 28px;
-  height: 28px;
+  width: 21px;
+  height: 21px;
+  box-sizing: border-box;
   background-color: transparent; 
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid transparent;
   border-radius: 4px; /* Bordes ligeramente cuadrados en hover, clásico de GNOME 3.32 */
   cursor: pointer;
-  transition: all 150ms ease;
 }
 
 /* Icono Minimizar (Línea horizontal en la parte inferior) */
 .window .btn-window-minimize {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4' y='10' width='8' height='1.5' fill='%232e3436'/%3E%3C/svg%3E");
-  background-size: 16px;
 }
 
 /* Icono Maximizar (Cuadrado con borde) */
 .window .btn-window-size {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='4.5' y='4.5' width='7' height='7' fill='none' stroke='%232e3436' stroke-width='1.5'/%3E%3C/svg%3E");
-  background-size: 16px;
 }
 
 /* Icono Cerrar (Equis fina) */
 .window .btn-window-close {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 5l6 6M5 11l6-6' stroke='%232e3436' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E");
-  background-size: 16px;
 }
 
 /* Efectos Hover (Pasar el ratón) */
@@ -341,24 +340,26 @@ main {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 5.5h7v7h-7zM5.5 3.5h7v7' fill='none' stroke='%232e3436' stroke-width='1.2'/%3E%3C/svg%3E");
 }
 
-.window.window--maximized {
+.window--maximized {
   /* !important es necesario para que cambien las posiciones y dimensiones de las ventanas */
   left: 0 !important; 
   top: 0 !important;
   width: 100% !important;
   height: 100% !important;
   border-radius: 0 !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  /** transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); **/
 }
 
 .app-menu {
+  position: absolute;
   display: flex;
   width: 100%;
   height: 100%;
-  background: #222222;
+  background: #282424eb;
   z-index: 99999;
   flex-direction: column;
   align-items: center;
+  transition: opacity 0.2s ease;
 }
 
 .app-menu-utilities {
@@ -375,7 +376,6 @@ main {
 }
 
 .menu-searchbox {
-  display: grid;
   width: 298px;
   height: 28px;
   margin-bottom: 20px;
@@ -394,35 +394,30 @@ main {
 
 /* Contenedor de la cuadrícula */
 .app-menu-container {
-    display: flex;
     justify-content: center;
     width: 100%;
-    max-width: 800px;
     padding: 10px 0;
-    flex: 1;
     min-height: 0;
     overflow: auto;
 }
 
 .app-menu-container-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 8px;
-    width: 100%;
-    height: fit-content;
-    padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100px, 18.75rem), 1fr));
+  gap: 1rem;
+  max-width: 50%;
+  margin: auto;
 }
 
 .app-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 12px 6px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
 }
 
 .app-icon img {
@@ -433,4 +428,31 @@ main {
 
 .icon-label {
   color: #a1a1a1;
+}
+
+.window .resizer{
+  width: 15px;
+  height: 15px;
+  position: absolute;
+}
+
+.window .resizer.top-left {
+  left: -5px;
+  top: -5px;
+  cursor: nwse-resize; /*resizer cursor*/
+}
+.window .resizer.top-right {
+  right: -5px;
+  top: -5px;
+  cursor: nesw-resize;
+}
+.window .resizer.bottom-left {
+  left: -5px;
+  bottom: -5px;
+  cursor: nesw-resize;
+}
+.window .resizer.bottom-right {
+  right: -5px;
+  bottom: -5px;
+  cursor: nwse-resize;
 }
