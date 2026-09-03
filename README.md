@@ -7,7 +7,7 @@
 
 ![Captura de pantalla](./assets/screenshots/beta01.png)
 
-## ✨ Mejoras de la BETA 0.0.1
+## Mejoras de la BETA 0.0.1
 
 - 🧩 **Desarrollo de aplicaciones nativas**  
   Crea y ejecuta aplicaciones dentro del entorno de vanillaOS
@@ -47,3 +47,8 @@ node server
 ## 🔗 Acceso
 
 Abre tu navegador y visita: http://localhost:8000
+
+
+## Proximas actualizaciones
+
+Se vendran muchas otras mas caracteristicas, en esta Beta 0.0.1 lo que se quizo hacer es refactorizar el codigo anterior y mejorarlo para tener luego la base solida del flujo importante de la interfaz y manejo de las ventanas.
