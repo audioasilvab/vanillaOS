@@ -51,7 +51,7 @@ Abre tu navegador y visita: http://localhost:8000
 
 ## Proximas actualizaciones
 
-Se vendran muchas otras mas caracteristicas, en esta Beta 0.0.1 lo que se quizo lograr es refactorizar el codigo anterior de las versiones anteriores y mejorarlo para tener luego la base solida importante del flujo de la interfaz y buen manejo de las ventanas.
+Se vendran mucho mas, solo es el comienzo, en esta Beta 0.0.1 lo que se quizo lograr es refactorizar el codigo anterior de las versiones anteriores y mejorarlo para tener luego la base solida importante del flujo de la interfaz y buen manejo de las ventanas.
 
 Algunas de novedades que quiero mencionar y logren llegar muy pronto serán:
 
