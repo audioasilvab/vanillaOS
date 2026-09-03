@@ -7,6 +7,7 @@
   <title>vanillaOS</title>
   <link rel="icon" href="img/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animation.css">
   <script src="js/wm.js"></script>
 </head>
 <body>
@@ -30,21 +31,19 @@
   <main>
     <div class="launcher">
       <div class="launcher-apps">
-        <div class="launcher__icon">
-          <img src="img/terminalIcon.svg" alt="Terminal icon">
-        </div>
+        
       </div>
       <div class="menu-launcher__icon">
         <img src="img/dots-menu-icon.svg" alt="Menu icon">
       </div>
     </div>
 
-    <section class="app-menu">
+    <section class="app-menu ocultar-total">
       <div class="app-menu-utilities">
         <div class="menu-searchbox">
           
         </div>
-        <img class="app-menu-container-wallpaper" src="../wallpapers/wall02.jpg">
+        <img class="app-menu-container-wallpaper" src="../wallpapers/wall03.jpg">
       </div>
       <div class="app-menu-container">
         <div class="app-menu-container-grid">
@@ -79,12 +78,37 @@
 
             // Añadir etiqueta al taskbar
             let launcherApps = document.querySelector(".launcher-apps");
+
             let launcherIcon = document.createElement('div');
+            launcherIcon.id = 'taskbar-'+win_element.id;
             launcherIcon.className = 'launcher__icon';
+            launcherIcon.innerHTML = `
+              <img src="${app.path+app.icon}" alt="icon">
+            `;
+            launcherIcon.addEventListener("click", () => {
 
-            launcherApps.appendChild(launcherIcon) /* NOTA: LO DEJAMOS HASTA AQUI*/
+              if (!win_element.classList.contains("hidden")) {
+                if (win_element.classList.contains('active')) {
+                  
 
+                  win_element.classList.toggle("hidden");
+                } else {
 
+                  win_element.classList.add("bouncing");
+
+                  win_element.addEventListener("transitionend", ()=> {
+                    win_element.classList.remove("bouncing");
+                  }, {once:true});
+
+                  window.windowManager.activateWindow(win_element.id);
+                }
+              } else {
+                win_element.classList.toggle("hidden");
+                window.windowManager.activateWindow(win_element.id);
+              }
+            });
+
+            launcherApps.appendChild(launcherIcon);
         } catch (error) {
             console.error("Error al cargar el módulo de la app:", error);
         }
@@ -126,12 +150,17 @@
       const app_menu = document.querySelector(".app-menu");
       const desktop = document.querySelector(".desktop");
 
-      if (app_menu.style.display === "none") {
-        desktop.style.display = "none";
-        app_menu.style.display = "flex";
+      // Si está visible, activamos animación de entrada
+      if (!app_menu.classList.contains('ocultar-entrar')) {
+        desktop.classList.remove('ocultar-entrar');
+        app_menu.classList.add('ocultar-entrar');
+        app_menu.classList.remove('ocultar-salir');
       } else {
-        app_menu.style.display = "none";
-        desktop.style.display = "flex";
+        // Si está hidden, lo mostramos y activamos animación de entrada
+
+        app_menu.classList.remove('ocultar-entrar', 'ocultar-total');
+        app_menu.classList.add('ocultar-salir');
+        desktop.classList.add('ocultar-entrar');
       }
     }
 
